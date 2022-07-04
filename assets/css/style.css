@@ -1,0 +1,331 @@
+/* montserrat-regular - latin_cyrillic */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/montserrat-v14-latin_cyrillic-regular.eot');
+    /* IE9 Compat Modes */
+    src: local('Montserrat Regular'), local('Montserrat-Regular'), url('../fonts/montserrat-v14-latin_cyrillic-regular.eot?#iefix') format('embedded-opentype'),
+        /* IE6-IE8 */ url('../fonts/montserrat-v14-latin_cyrillic-regular.woff2') format('woff2'),
+        /* Super Modern Browsers */ url('../fonts/montserrat-v14-latin_cyrillic-regular.woff') format('woff'),
+        /* Modern Browsers */ url('../fonts/montserrat-v14-latin_cyrillic-regular.ttf') format('truetype'),
+        /* Safari, Android, iOS */ url('../fonts/montserrat-v14-latin_cyrillic-regular.svg#Montserrat') format('svg');
+    /* Legacy iOS */
+}
+
+.ivan-calc * {
+    box-sizing: border-box;
+    font-family: Montserrat;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 140%;
+    color: #000000;
+    border: none;
+}
+
+.ivan-calc button:active, button:focus, input {
+    outline: none !important;
+}
+
+.ivan-calc button::-moz-focus-inner {
+    border: 0 !important;
+}
+
+.ivan-calc [v-cloak] {
+    display: none;
+}
+
+/* Заголовок */
+.ivan-calc .c__title {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 140%;
+    color: #181717;
+    display: flex;
+    align-items: center;
+    margin-bottom: 65px;
+}
+
+/* Подзаголовок */
+.ivan-calc .c__subtitle {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 140%;
+    color: #2E5B97;
+    display: flex;
+    align-items: center;
+    padding-left: 3px;
+    margin-top: 65px;
+}
+
+/* Второстепенный заголовок */
+.ivan-calc .c__title_secondary {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 23px;
+    line-height: 140%;
+    color: #181717;
+    margin-bottom: 24px;
+}
+
+/* Иконка второстепенного заголовка */
+.ivan-calc .c__title_secondary__icon {
+    height: 54px;
+    width: 54px;
+    vertical-align: middle;
+    border-style: none;
+    margin-right: 10px;
+}
+
+/* Карточки конфигураций */
+.ivan-calc .c__cards {
+    margin: 0px;
+    padding: 0px 0px 40px 0px;
+}
+
+/* Карточка конфигурации */
+.ivan-calc .c__cards .c__card {
+    padding: 22px;
+    margin: 8px 8px 8px 8px;
+    background: #FCFCFC;
+    border: 1px solid #D8D8D8;
+    box-sizing: border-box;
+    box-shadow: 4px 4px 10px rgba(206, 201, 197, 0.7);
+    border-radius: 5px;
+    line-height: 105px;
+    height: 150px;
+    min-width: 132px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+/* Карточка конфигурации :hover */
+.ivan-calc .c__cards .c__card:hover {
+    box-shadow: 4px 4px 10px rgba(250, 143, 60, 0.7);
+}
+
+/* Активная карточка конфигурации */
+.ivan-calc .c__cards .c__card_active {
+    border: 1px solid #FA8F3C;
+    box-shadow: 4px 4px 10px rgba(250, 143, 60, 0.7);
+}
+
+/* Изображение карточки конфигурации */
+.ivan-calc .c__cards .c__card img {
+    padding: 0px;
+    margin: 0px auto;
+    max-height: 105px;
+    width: auto;
+    vertical-align: middle;
+}
+
+/* Изображение конфигурации */
+.ivan-calc .c__img-conf {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* Чекбокс */
+.ivan-calc input[type="checkbox"] {
+    margin-right: 12px;
+}
+
+/* Область галочки чекбокса */
+.ivan-calc input[type="checkbox"]:before {
+    content: '';
+    display: block;
+    width: 18px;
+    height: 18px;
+    background-color: #fff;
+    border: 1px solid #3E3E3E;
+}
+
+/* Галочка чекбокса */
+.ivan-calc input[type="checkbox"]:checked:after {
+    content: '';
+    display: block;
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    top: 3px;
+    left: 2px;
+    background-image: url(../images/check.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Дополнительные параметры */
+.ivan-calc .с__advanced {
+    margin-bottom: 24px !important;
+}
+
+/* Строка заказа */
+.ivan-calc .c__order {
+    margin-bottom: 0px !important;
+}
+
+/* Название заказа */
+.ivan-calc .c__order_name {
+    cursor: pointer;
+}
+
+/* Название текущего заказа */
+.ivan-calc .c__order_name_current {
+    text-decoration: underline;
+}
+
+/* Кнопка добавления нового заказа */
+.ivan-calc .button.is-success.is-light {
+    background-color: #c3ffd9;
+    color: #216337;
+}
+
+/* Надпись цены */
+.ivan-calc .c__price-label {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 23px;
+    line-height: 150%;
+    color: #181717;
+    opacity: 0.8;
+}
+
+/* Старая цена */
+.ivan-calc .c__price_old {
+    display: block;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 150%;
+    color: #181717;
+    opacity: 0.6;
+    text-decoration: line-through;
+}
+
+/* Новая цена */
+.ivan-calc .c__price {
+    display: block;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 23px;
+    line-height: 150%;
+    color: #181717;
+}
+
+/* Кнопки */
+.ivan-calc .button {
+    font-weight: lighter;
+}
+
+/* Кнопка отправки расчета */
+.ivan-calc .c__button_send {
+    background: #FA8F3C;
+    box-shadow: 4px 4px 10px rgba(250, 143, 60, 0.7);
+    font-style: normal;
+    border: none;
+    /* font-size: 18px; */
+    font-size: 12px;
+    padding: 19px 31px;
+    font-weight: lighter;
+    /* height: 48px; */
+    height: auto;
+    color: #FCFCFC;
+    transition: 0.4s;
+}
+
+/* Кнопка отправки расчета :hover */
+.ivan-calc .c__button_send:hover, .ivan-calc .c__button_send:active, .ivan-calc .c__button_send:focus {
+    color: #FCFCFC;
+    box-shadow: 0px 0px 0px 0px;
+}
+
+/* Примечание */
+.ivan-calc .c__note {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 150%;
+    color: #181717;
+    opacity: 0.8;
+}
+
+/* Стрелка у выпадающего списка */
+.ivan-calc .select:not(.is-multiple):not(.is-loading)::after {
+    border-color: #5a5a5a78 !important;
+}
+
+/* Отключаем стрелки у числового поля */
+.ivan-calc input[type="number"]::-webkit-outer-spin-button, .ivan-calc input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+/* Блок с ценами и кнопкой отправки */
+.ivan-calc .c__total {
+    align-items: flex-end;
+}
+
+@media screen and (max-width: 768px) {
+    /* Заголовок */
+    .ivan-calc .c__title {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 140%;
+        margin-bottom: 25px;
+    }
+
+    /* Подзаголовок */
+    .ivan-calc .c__subtitle {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 15px;
+        line-height: 140%;
+        padding-left: 0px;
+        margin-top: 25px;
+    }
+
+    /* Второстепенный заголовок */
+    .ivan-calc .c__title_secondary {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 140%;
+    }
+
+    /* Иконка второстепенного заголовка */
+    .ivan-calc .c__title_secondary__icon {
+        height: 32px;
+        width: 32px;
+        margin-right: 4px;
+    }
+
+    /* Название заказа */
+    .ivan-calc .c__order_name {
+        padding-bottom: 0px;
+        padding-top: 20px;
+    }
+}
+
+@media screen and (min-width: 1408px) {
+    .ivan-calc .c__img-conf {
+        padding-left: 20px;
+        padding-right: 40px;
+    }
+
+    .ivan-calc .c__img-conf img {
+        height: 400px;
+        width: auto;
+    }
+}

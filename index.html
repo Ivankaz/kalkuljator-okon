@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>
+    Калькулятор стоимости пластиковых окон
+  </title>
+  <link rel="stylesheet" href="assets/css/bulma.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<script src="assets/js/vue.js"></script>
+<section class="ivan-calc section" id="calc" v-if="ready===true">
+  <div class="container">
+    <!-- Заголовок -->
+    <p class="c__subtitle">
+      Предварительный расчет
+    </p>
+    <h1 class="c__title">
+      Калькулятор
+    </h1>
+
+    <!-- Конфигурации -->
+    <h2 class="c__title c__title_secondary">
+      Выберите конфигурацию:
+    </h2>
+    <div class="columns is-mobile c__cards is-multiline">
+      <div v-for="elConfiguration in settings.configurations"
+           :class="['column c__card', currentOrder.configuration.name===elConfiguration.name ? 'c__card_active' : '']"
+           @click="currentOrder.setConfiguration(elConfiguration)">
+        <img :src="elConfiguration.images['0'.repeat(elConfiguration.sashesCount)]" :alt="elConfiguration.name">
+      </div>
+    </div>
+
+    <div class="columns is-flex-fullhd">
+      <!-- Выбранная конфигурация -->
+      <div class="column is-full-mobile is-5-fullhd c__img-conf">
+        <img :src="currentOrder.image" alt="Выбранная конфигурация">
+      </div>
+
+      <!-- Параметры окна -->
+      <div class="column is-full-mobile is-6-fullhd">
+        <h2 class="c__title_secondary">
+          <img src="assets/images/icons8-level-1-96.png" alt="Шаг 1" class="c__title_secondary__icon">
+          <span>Укажите параметры{{ currentOrder.configuration.type=='window' ? ' окна' : currentOrder.configuration.type=='balcony' ? ' балкона' : ''}}:</span>
+        </h2>
+
+        <div class="columns is-desktop is-multiline">
+
+          <!-- Ширина двери -->
+          <div v-show="currentOrder.configuration.type=='balcony'" class="column is-half-fullhd">
+            <div class="control is-expanded">
+              <label class="label">Ширина двери (мм)</label>
+              <input v-model.number="currentOrder.configuration.doorWidth" class="input is-rounded" type="number"
+                     placeholder="Ширина двери">
+            </div>
+          </div>
+
+          <!-- Высота двери -->
+          <div v-show="currentOrder.configuration.type=='balcony'" class="column is-half-fullhd">
+            <div class="control is-expanded">
+              <label class="label">Высота двери (мм)</label>
+              <input v-model.number="currentOrder.configuration.doorHeight" class="input is-rounded" type="number"
+                     placeholder="Высота двери">
+            </div>
+          </div>
+
+          <!-- Ширина окна -->
+          <div class="column is-half-fullhd">
+            <div class="control is-expanded">
+              <label class="label">Ширина окна (мм)</label>
+              <input v-model.number="currentOrder.configuration.windowWidth" class="input is-rounded" type="number"
+                     placeholder="Ширина окна">
+            </div>
+          </div>
+
+          <!-- Высота окна -->
+          <div class="column is-half-fullhd">
+            <div class="control is-expanded">
+              <label class="label">Высота окна (мм)</label>
+              <input v-model.number="currentOrder.configuration.windowHeight" class="input is-rounded" type="number"
+                     placeholder="Высота окна">
+            </div>
+          </div>
+        </div>
+
+        <!-- Створки окон -->
+        <div class="columns is-desktop">
+          <div v-for="(elSash, iSash) in currentOrder.configuration.sashes" class="column">
+            <div class="control is-expanded">
+              <label class="label">Створка №{{ parseInt(iSash)+1 }}</label>
+              <div class="select is-rounded is-fullwidth">
+                <select v-model="elSash.openingType" @change="currentOrder.updateImage()">
+                  <option v-for="elOpeningType in settings.openingTypes" :value="elOpeningType">
+                    {{ elOpeningType.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Другие параметры -->
+        <h2 class="c__title_secondary">
+          <img src="assets/images/icons8-circled-2-c-96.png" alt="Шаг 2" class="c__title_secondary__icon">
+          <span>Дополнительные параметры:</span>
+        </h2>
+        <div class="columns is-desktop">
+
+          <!-- Тип дома -->
+          <div class="column">
+            <label class="label">Тип дома</label>
+            <div class="control is-expanded">
+              <div class="select is-rounded is-fullwidth">
+                <select v-model="currentOrder.houseType">
+                  <option v-for="elHouseType in settings.houseTypes" :value="elHouseType">
+                    {{ elHouseType.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Профиль -->
+          <div class="column">
+            <label class="label">Профиль</label>
+            <div class="control is-expanded">
+              <div class="select is-rounded is-fullwidth">
+                <select v-model="currentOrder.profile">
+                  <option v-for="elProfile in settings.profiles" :value="elProfile">
+                    {{ elProfile.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns is-desktop">
+
+          <!-- Стеклопакет -->
+          <div class="column">
+            <label class="label">Стеклопакет</label>
+            <div class="control is-expanded">
+              <div class="select is-rounded is-fullwidth">
+                <select v-model="currentOrder.glassPackage">
+                  <option v-for="elGlassPackage in settings.glassPackages" :value="elGlassPackage">
+                    {{ elGlassPackage.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Цвет -->
+          <div class="column">
+            <label class="label">Цвет</label>
+            <div class="control is-expanded">
+              <div class="select is-rounded is-fullwidth">
+                <select v-model="currentOrder.color">
+                  <option v-for="elColor in settings.colors" :value="elColor">
+                    {{ elColor.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns is-desktop с__advanced">
+          <div class="column is-5-desktop">
+
+            <!-- Откосы -->
+            <div class="field">
+              <div class="control">
+                <label class="checkbox">
+                  <input v-model="currentOrder.slopes" type="checkbox"/>
+                  Откосы
+                </label>
+              </div>
+            </div>
+
+            <!-- Москитная сетка -->
+            <div class="field">
+              <div class="control">
+                <label class="checkbox">
+                  <input v-model="currentOrder.mosquitoNet" type="checkbox"/>
+                  Москитная сетка
+                </label>
+              </div>
+            </div>
+
+            <!-- Отливы -->
+            <div class="field">
+              <div class="control">
+                <label class="checkbox">
+                  <input v-model="currentOrder.apron" type="checkbox"/>
+                  Отливы
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="column">
+
+            <!-- Монтаж -->
+            <div class="field">
+              <div class="control">
+                <label class="checkbox">
+                  <input v-model="currentOrder.mounting" type="checkbox"/>
+                  Монтаж
+                </label>
+              </div>
+            </div>
+
+            <!-- Подоконник -->
+            <div class="field">
+              <div class="control">
+                <label class="checkbox">
+                  <input v-model="currentOrder.sill" type="checkbox"/>
+                  Подоконник
+                </label>
+              </div>
+            </div>
+
+            <!-- Микропроветривание -->
+            <div class="field">
+              <div class="control">
+                <label class="checkbox">
+                  <input v-model="currentOrder.microVentilation" type="checkbox"/>
+                  Микропроветривание
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="c__title_secondary">
+          <img src="assets/images/icons8-circled-3-c-96.png" alt="Шаг 3" class="c__title_secondary__icon">
+          <span>Расчёт:</span>
+        </h2>
+
+        <!-- Заказы -->
+        <div v-for="(elOrder, iOrder) in orders" class="columns is-mobile is-multiline is-vcentered c__order">
+          <div @click="currentOrder=elOrder"
+               :class="['column is-full-mobile is-narrow c__order_name', currentOrder==elOrder ? 'c__order_name_current' : '']">
+            {{ parseInt(iOrder)+1 }}. {{ elOrder.getName() }}
+          </div>
+          <div class="column has-text-right has-text-left-mobile">
+            {{ elOrder.getTotal() | priceFormat }} руб.
+          </div>
+          <div class="column is-narrow">
+            <button @click="deleteOrder(iOrder)" class="button is-danger is-light" :disabled="orders.length===1">
+              <svg class="bi bi-trash" fill="#F44333" viewbox="0 0 20 20" width="1.8em"
+                   xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.5 7.5A.5.5 0 018 8v6a.5.5 0 01-1 0V8a.5.5 0 01.5-.5zm2.5 0a.5.5 0 01.5.5v6a.5.5 0 01-1 0V8a.5.5 0 01.5-.5zm3 .5a.5.5 0 00-1 0v6a.5.5 0 001 0V8z">
+                </path>
+                <path clip-rule="evenodd"
+                      d="M16.5 5a1 1 0 01-1 1H15v9a2 2 0 01-2 2H7a2 2 0 01-2-2V6h-.5a1 1 0 01-1-1V4a1 1 0 011-1H8a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1zM6.118 6L6 6.059V15a1 1 0 001 1h6a1 1 0 001-1V6.059L13.882 6H6.118zM4.5 5V4h11v1h-11z"
+                      fill-rule="evenodd">
+                </path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Добавление нового заказа -->
+        <div class="columns is-mobile">
+          <div class="column is-full">
+            <button @click="addOrder()" class="button is-success is-light is-pulled-right">
+              Добавить новый заказ
+            </button>
+          </div>
+        </div>
+
+        <!-- Форма заказа -->
+        <div class="columns is-mobile is-multiline">
+
+          <!-- Имя -->
+          <div class="column is-full-mobile">
+            <div class="control is-expanded">
+              <label class="label">Имя</label>
+              <input type="text"
+                     placeholder="Имя"
+                     class="input is-rounded"
+                     name="name"/>
+            </div>
+          </div>
+
+          <!-- Телефон -->
+          <div class="column is-full-mobile">
+            <div class="control is-expanded">
+              <label class="label">Телефон</label>
+              <input type="tel"
+                     placeholder="+7 (___) ___-__-__"
+                     class="input is-rounded"
+                     name="phone"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- Расчет -->
+        <div class="columns is-mobile is-multiline c__total">
+          <div class="column is-narrow is-6-mobile c__price-label">
+            Итого*:
+          </div>
+          <div class="column has-text-left has-text-right-mobile">
+            <span class="c__price_old">{{ Math.ceil(app.total/(100-app.settings.discount)*100*100)/100 | priceFormat }} руб.</span>
+            <span class="c__price">{{ total | priceFormat }} руб.</span>
+          </div>
+          <div class="column is-narrow is-full-mobile">
+            <button @click="send()" class="button c__button_send is-fullwidth">
+              ОТПРАВИТЬ РАСЧЕТ
+            </button>
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column is-full c__note">
+            * Данный расчёт является предварительным, точную цену Вы можете уточнить у наших менеджеров
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+<script src="assets/js/jquery.min.js"></script>
+<script defer=""
+        src="https://cdn.jsdelivr.net/gh/RobinHerbots/jquery.inputmask@3.3.11/dist/min/jquery.inputmask.bundle.min.js"></script>
+<script src="assets/js/vue-resource.js"></script>
+<script src="assets/js/main.js"></script>
+</html>
